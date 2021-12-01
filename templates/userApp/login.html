@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Login</title>
+
+{% endblock title %}
+
+
+{% block content %}
+    <br>
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                <strong>Success! </strong>{{message}}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <center><h1 class="text-primary">Login into your account!</h1></font></center>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+
+            <form method="POST", class="mt-5 col-6 align-middle">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" value="Login" class="btn btn-primary mt-3">
+            </form>
+
+            <div class="col">
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+            
+            <div class="mt-2 col-6">
+                <center><a href="{% url 'register' %}"><button type="button" class="btn btn-success">Create New User</button></a></center>
+            </div>
+            
+            <div class="col">
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+

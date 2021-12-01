@@ -1,0 +1,117 @@
+{%  extends 'main.html' %}
+
+
+{% block title %}
+    <title>Todo List</title>
+{% endblock title%}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+
+    <!-- Diplaying Django messages -->
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                <strong>Success! </strong>{{message}}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+
+    <!-- Displaying Form -->
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="New Task?" name="task">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <br>
+    <br>
+
+    <!-- Displaying Task Table -->
+    {% if all_tasks%}
+       
+        <table class="table table-hover  table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col"><center>ID</center></th>
+                <th scope="col"><center>Task</center></th>
+                <th scope="col"><center>Done</center></th>
+                <th scope="col"><center>Edit</center></th>
+                <th scope="col"><center>Delete</center></th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                {% for task in all_tasks %}
+                    {% if task.done %}
+                        <tr class="table-success">
+                            <td><center>{{task.id}}</center></td>
+                            <td><center><u><i>{{task.task}}</i></u></center></td>
+                            
+
+                            <td><center><a href="{% url 'pending_task' task.id %}">
+                                <button type="button" class="btn btn-success">Mark as Pending</button>
+                                        </a>
+                                 </center>
+                            </tdclass=>
+
+
+                            <td><center><a href="{% url 'update_task' task.id %}">
+                                            <button type="button" class="btn btn-warning">Edit</button>
+                                        </a>
+                                </center>
+                            </td> 
+
+                            <td><center><a href="{% url 'delete_task' task.id %}">
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </a>
+                                </center>
+                            </tdlass=>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td><center>{{task.id}}</center></td>
+                            <td><center>{{task.task}}</center></td>
+                            
+
+                            <td><center><a href="{% url 'completed_task' task.id %}">
+                                <button type="button" class="btn btn-primary">Mark as Completed</button>
+                                        </a>
+                                 </center>
+                            </td=>
+
+                            <td><center><a href="{% url 'update_task' task.id %}">
+                                            <button type="button" class="btn btn-warning">Edit</button>
+                                        </a>
+                                </center>
+                            </td>   
+
+                            <td class="col-1"><center><a href="{% url 'delete_task' task.id %}">
+                                             <button type="button" class="btn btn-danger">Delete</button>
+                                        </a>
+                                </center>
+                            </td>   
+                        </trclass=>
+                    {% endif %}
+
+                {% endfor %}
+            </tbody>
+            
+        </table>
+
+        
+
+    {% else %}
+        <h1>Currently No Task Is Available!</h1>
+    {% endif %}
+
+
+    {% include 'pagination.html' with queryset=all_tasks  custom_range=custom_range %}     <!--Dynamic Page Query-->
+    
+{% endblock content %}

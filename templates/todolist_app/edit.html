@@ -1,0 +1,43 @@
+{%  extends 'main.html' %}
+
+{% block title %}
+    <title>Edit Task</title>
+{% endblock title%}
+
+{% block content %}
+    <br>
+    <br>
+    <!-- Diplaying Django messages -->
+    {% if messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+            <strong>Success! </strong>{{message}}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+
+    <!-- Displaying Form -->
+    {% if task.owner == request.user  %}
+        <h3>Do you wish to edit task: {{task.task}} ?</h3>
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Edit Task?" name="task">
+                <input type="hidden" class="form-control" name="done", value="{{task.done}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% else %}
+        <h1> User are not authorised to access this page!</h1>
+        <a href="{% url 'todolist' %}"><button type="submit" class="btn btn-primary">Task List</button></a>
+    {% endif %}
+
+    <a href="{% url 'todolist' %}"><button type="submit" class="btn btn-primary">Cancel</button></a>
+        
+
+
+
+{% endblock content %}

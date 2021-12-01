@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Login</title>
+
+{% endblock title %}
+
+
+{% block content %}
+    <br>
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                <strong>Success! </strong>{{message}}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <center><h1 class="text-primary">Thank for visiting TaskMate! See you soon!</h1></font></center>
+    
+    <center><h4>Wan't to login again..?</h4>
+        <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Yes</button></a>
+        </center>
+
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+
+            <form method="POST", class="mt-5 col-6 align-middle">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" value="Login" class="btn btn-primary mt-3">
+            </form>
+
+            <div class="col">
+            </div>
+
+        </div>
+    </div> -->
+
+
+{% endblock content %}
+
+
